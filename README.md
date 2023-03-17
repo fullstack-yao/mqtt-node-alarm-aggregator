@@ -59,6 +59,16 @@ npm run sub
 
 ```
 
+# Test:
+
+Run test,
+
+```
+
+npm run test
+
+```
+
 # mqtt-node-alarm-aggregator
 
 This is a node.js mqtt client that subscribes and keeps track of six alarm topics. When **any** of these child topics publishes a value of '0', the client will publish a '0' to the parent topic. Only when **all** child topics last published a value of '1', then the client can publish '1' to the parent topic. The value of '0' represents a flag indicating of that status of that system needing attention, while a value of '1' indicates no attention needed . Assume the initial state of the parent topic is '1'.
