@@ -1,14 +1,14 @@
-import mqtt from "mqtt";
-import { BROKER_URL } from "./config.js";
-import { childTopics, parentTopic } from "./topics.js";
-import { initChildStatus, requirePubToParentTopic } from "./alarmController.js";
+import mqtt from 'mqtt';
+import { BROKER_URL } from './config.js';
+import { childTopics, parentTopic } from './topics.js';
+import { initChildStatus, requirePubToParentTopic } from './alarmController.js';
 
 const client = mqtt.connect(BROKER_URL);
 
 const childStatus = {};
 initChildStatus(childStatus);
 
-client.on("connect", () => {
+client.on('connect', () => {
   childTopics.forEach((childTopic) => {
     client.subscribe(childTopic, (err) => {
       if (err) {
@@ -20,7 +20,7 @@ client.on("connect", () => {
   });
 });
 
-client.on("message", (topic, message) => {
+client.on('message', (topic, message) => {
   const messageStr = message.toString();
   console.log(`Receive ${messageStr} from the child topic - ${topic}`);
   if (requirePubToParentTopic(topic, messageStr, childStatus)) {
@@ -30,7 +30,7 @@ client.on("message", (topic, message) => {
   }
 });
 
-client.on("error", (err) => {
+client.on('error', (err) => {
   console.log(`Error: ${err}`);
   process.exit(1);
 });
