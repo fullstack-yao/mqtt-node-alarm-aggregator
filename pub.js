@@ -1,6 +1,6 @@
-import mqtt from 'mqtt';
-import { FAILED_MESSAGE, NORMAL_MESSAGE, BROKER_URL } from './config.js';
-import { childTopics } from './topics.js';
+import mqtt from "mqtt";
+import { FAILED_MESSAGE, NORMAL_MESSAGE, BROKER_URL } from "./config.js";
+import { childTopics } from "./topics.js";
 
 const PUB_INTERVAL = 3000;
 const FAILURE_PERCENTAGE = 20;
@@ -19,7 +19,7 @@ const getRandomMessage = () => {
 };
 
 const client = mqtt.connect(BROKER_URL);
-client.on('connect', () => {
+client.on("connect", () => {
   setInterval(() => {
     const randomChildTopic = getRandomChildTopic();
     const randomMessage = getRandomMessage();
@@ -28,19 +28,7 @@ client.on('connect', () => {
   }, PUB_INTERVAL);
 });
 
-client.on('error', (err) => {
+client.on("error", (err) => {
   console.log(`Error: ${err}`);
   process.exit(1);
 });
-
-// client.on('close', () => {
-//   console.log('Connection closed by client');
-// });
-
-// client.on('reconnect', () => {
-//   console.log('Client trying a reconnection');
-// });
-
-// client.on('offline', () => {
-//   console.log('Client is currently offline');
-// });
