@@ -5,8 +5,7 @@ import { initChildStatus, requirePubToParentTopic } from './alarmController.js';
 
 const client = mqtt.connect(BROKER_URL);
 
-const childStatus = {};
-initChildStatus(childStatus);
+const childStatus = initChildStatus();
 
 client.on('connect', () => {
   childTopics.forEach((childTopic) => {

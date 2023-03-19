@@ -1,10 +1,18 @@
 import { initChildStatus, requirePubToParentTopic } from './alarmController.js';
 import { childTopics } from './topics.js';
+import { NORMAL_MESSAGE } from './config.js';
 
 describe('Alarm aggregator logic tests', () => {
-  const childStatus = {};
+  const childStatus = initChildStatus();
   const ChildTopic = childTopics[0];
-  initChildStatus(childStatus);
+
+  it('Should get correct initial childStatus', () => {
+    childTopics.forEach((topic) => {
+      expect(childStatus[topic]).toBe(NORMAL_MESSAGE);
+    });
+    expect(childStatus.numOfNormal).toBe(childTopics.length);
+  });
+
   it('Should publish 0 to parent topic with receiving 0', () => {
     const result = requirePubToParentTopic(ChildTopic, '0', childStatus);
     expect(result).toBe(true);

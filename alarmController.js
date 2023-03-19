@@ -1,11 +1,13 @@
 import { FAILED_MESSAGE, NORMAL_MESSAGE } from './config.js';
 import { childTopics } from './topics.js';
 
-export const initChildStatus = (childStatus) => {
+export const initChildStatus = () => {
+  const childStatus = {};
   childTopics.forEach((childTopic) => {
     childStatus[childTopic] = NORMAL_MESSAGE;
   });
   childStatus['numOfNormal'] = childTopics.length;
+  return childStatus;
 };
 
 export const requirePubToParentTopic = (topic, messageStr, childStatus) => {
